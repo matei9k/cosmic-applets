@@ -445,6 +445,15 @@ impl NetworkManagerState {
             .collect();
         wireless_access_points.sort_by(|a, b| b.strength.cmp(&a.strength));
         self_.wireless_access_points = wireless_access_points;
+        for ap in &self_.wireless_access_points {
+            tracing::info!(
+                "AP ssid: {},\ttype: {:?},\tworking: {},\tstate: {:?}",
+                ap.ssid,
+                ap.network_type,
+                ap.working,
+                ap.state
+            )
+        }
         self_.active_conns = active_conns;
         self_.known_access_points = known_access_points;
         self_.connectivity = network_manager.connectivity().await?;
